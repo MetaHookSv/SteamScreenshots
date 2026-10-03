@@ -2,13 +2,8 @@
 
 [中文文档](README.zh-CN.md)
 
-SteamScreenshots is a MetaHook plugin that sends the engine's `snapshot` command
-to the Steam Screenshot Manager. It captures the final OpenGL back buffer before
-presentation, flips the RGB image, and adds the server location and Steam user tag.
-
-The plugin retains the implementation from MetaHookSv `fe80b6d`. Its documented
-game targets are Sven Co-op and GoldSrc after the Half-Life 25th anniversary
-update. The standalone build does not establish runtime testing of every engine.
+SteamScreenshots is a MetaHook plugin that takes over the engine's `snapshot` command
+ and send captured image to the Steam Screenshot Manager.
 
 ## Install
 
@@ -111,5 +106,4 @@ executed locally with a suitable OpenGL driver.
 ## License
 
 Plugin code is covered by the [MIT License](LICENSE). Each dependency retains
-its own license or applicable terms; local builds install notices under
-`metahook/licenses/SteamScreenshots`. The 7z archive excludes `licenses/`.
+its own license or applicable terms;

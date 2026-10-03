@@ -2,12 +2,7 @@
 
 [English](README.md)
 
-SteamScreenshots 是 MetaHook 截图插件，将引擎的 `snapshot` 命令接入 Steam
-截图管理器。插件在呈现前读取最终 OpenGL 后缓冲，翻转 RGB 图像，并附加服务器
-位置及 Steam 用户标签。
-
-截图实现沿用 MetaHookSv `fe80b6d`。原项目注明的游戏范围为 Sven Co-op 和
-Half-Life 25 周年更新后的 GoldSrc；独立构建不代表已对所有引擎完成运行验证。
+SteamScreenshots 是 MetaHook 截图插件，本插件会接管引擎的 `snapshot` 命令并将截图画面发送给 Steam 截图管理器。
 
 ## 安装
 
@@ -101,5 +96,3 @@ LiveBuild 响应 main 分支 push、PR 和手动触发；Release 响应 `v*` 标
 ## 许可证
 
 插件代码使用 [MIT License](LICENSE)。依赖保留各自许可证或适用条款；
-本地构建安装后的说明位于 `metahook/licenses/SteamScreenshots`，7z 压缩包
-不包含 `licenses/` 目录。
