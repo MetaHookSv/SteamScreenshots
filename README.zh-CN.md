@@ -15,7 +15,7 @@ Half-Life 25 周年更新后的 GoldSrc；独立构建不代表已对所有引�
 2. 从 [Releases](https://github.com/MetaHookSv/SteamScreenshots/releases) 下载
    `SteamScreenshots-windows-x86.7z`，或自行构建。
 3. 将压缩包中 `svencoop/` 的内容复制到游戏的 mod 目录：Sven Co-op 使用
-   `svencoop/`，Half-Life 使用 `valve/`。保留插件、gamedata 和许可证目录。
+   `svencoop/`，Half-Life 使用 `valve/`。保留插件和 gamedata 目录。
 4. 在 `metahook/configs/plugins.lst` 中单独添加一行 `SteamScreenshots.dll`。
 5. 通过 MetaHook 启动游戏，执行 `snapshot` 命令或相应的绑定按键。
 
@@ -101,4 +101,5 @@ LiveBuild 响应 main 分支 push、PR 和手动触发；Release 响应 `v*` 标
 ## 许可证
 
 插件代码使用 [MIT License](LICENSE)。依赖保留各自许可证或适用条款；
-安装后的说明位于 `metahook/licenses/SteamScreenshots`。
+本地构建安装后的说明位于 `metahook/licenses/SteamScreenshots`，7z 压缩包
+不包含 `licenses/` 目录。

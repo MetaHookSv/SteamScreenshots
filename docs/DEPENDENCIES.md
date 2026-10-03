@@ -21,9 +21,10 @@ Source checkouts reside in the build directory; downloaded VC-LTL packages are
 cached in `thirdparty/cache`. GLFW is fetched only when tests are enabled.
 
 The plugin's MIT license does not replace dependency licenses or applicable
-terms. The installation includes MetaHook's LICENSE, GLEW's LICENSE.txt,
+terms. The local installation includes MetaHook's LICENSE, GLEW's LICENSE.txt,
 SteamSDK's STEAM-SDK-NOTICE.md and VC-LTL's Readme.md in their named subdirectories
-under `svencoop/metahook/licenses/SteamScreenshots`.
+under `svencoop/metahook/licenses/SteamScreenshots`. The 7z archive excludes
+the `licenses/` directory.
 
 SteamSDK retains Valve's copyright notices and applicable Steamworks terms.
 It supplies the import library for this build. The release package does not

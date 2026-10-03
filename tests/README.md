@@ -48,7 +48,7 @@ and Python 3.12.5:
   returned a plugin instance without initializing the engine or Steam.
 - Both installed gamedata catalogs passed validation for all nine snapshots.
 - Workflow actionlint and composite action YAML parsing passed. The Release
-  7z passed integrity checking and contains 18 files: DLL/PDB, catalog and notices.
+  7z passed integrity checking and contains 12 files: DLL/PDB and catalog.
 - All six production files matched the original SHA256; both gamedata helpers
   matched ResourceReplacer. The default configuration with tests and gamedata
   synchronization disabled also configured successfully.

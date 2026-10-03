@@ -16,8 +16,8 @@ update. The standalone build does not establish runtime testing of every engine.
 2. Download `SteamScreenshots-windows-x86.7z` from
    [GitHub Releases](https://github.com/MetaHookSv/SteamScreenshots/releases), or build it locally.
 3. Copy the contents of the package's `svencoop/` into your game's mod directory
-   (`svencoop/` for Sven Co-op, `valve/` for Half-Life). Keep the plugin, gamedata
-   and license directories together.
+   (`svencoop/` for Sven Co-op, `valve/` for Half-Life). Keep the plugin and
+   gamedata directories together.
 4. Add `SteamScreenshots.dll` on its own line in `metahook/configs/plugins.lst`.
 5. Launch through MetaHook and run the `snapshot` console command or its bound key.
 
@@ -111,5 +111,5 @@ executed locally with a suitable OpenGL driver.
 ## License
 
 Plugin code is covered by the [MIT License](LICENSE). Each dependency retains
-its own license or applicable terms; installed notices are under
-`metahook/licenses/SteamScreenshots`.
+its own license or applicable terms; local builds install notices under
+`metahook/licenses/SteamScreenshots`. The 7z archive excludes `licenses/`.
