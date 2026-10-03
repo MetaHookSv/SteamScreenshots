@@ -1,0 +1,36 @@
+name: Build Windows x86 Release
+description: Build and package the SteamScreenshots plugin.
+
+outputs:
+  archive-path:
+    description: Absolute path to the Windows x86 7z archive.
+    value: ${{ steps.package.outputs.archive-path }}
+
+runs:
+  using: composite
+  steps:
+    - name: Build and install
+      shell: cmd
+      # Compile capture tests here; execute them locally with an OpenGL 3.3 driver.
+      run: call scripts\build-SteamScreenshots-x86-Release.bat -DBUILD_TESTING=ON
+
+    - name: Validate installed gamedata
+      shell: cmd
+      run: python scripts\validate-gamedata.py install\x86\Release\svencoop\metahook\gamedata\steamscreenshots --manifest scripts\manifests\steamscreenshots.json
+
+    - name: Package plugin
+      id: package
+      shell: pwsh
+      working-directory: install/x86/Release
+      run: |
+        $archiveDirectory = Join-Path $env:GITHUB_WORKSPACE 'build/artifacts'
+        New-Item -ItemType Directory -Path $archiveDirectory -Force | Out-Null
+        $archivePath = Join-Path $archiveDirectory 'SteamScreenshots-windows-x86.7z'
+        if (Test-Path -LiteralPath $archivePath -PathType Leaf) {
+          Remove-Item -LiteralPath $archivePath
+        }
+        & 7z a -t7z $archivePath 'svencoop'
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        & 7z t $archivePath
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        "archive-path=$archivePath" >> $env:GITHUB_OUTPUT
