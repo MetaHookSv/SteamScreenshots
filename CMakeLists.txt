@@ -68,12 +68,6 @@ set_target_properties(SteamScreenshots PROPERTIES INTERPROCEDURAL_OPTIMIZATION_R
 
 install(TARGETS SteamScreenshots RUNTIME DESTINATION svencoop/metahook/plugins)
 install(FILES "$<TARGET_PDB_FILE:SteamScreenshots>" DESTINATION svencoop/metahook/plugins)
-set(license_dir svencoop/metahook/licenses/SteamScreenshots)
-install(FILES LICENSE docs/DEPENDENCIES.md DESTINATION "${license_dir}")
-install(FILES "${METAHOOK_SOURCE_PATH}/LICENSE" DESTINATION "${license_dir}/MetaHook")
-install(FILES "${STEAMSDK_SOURCE_PATH}/STEAM-SDK-NOTICE.md" DESTINATION "${license_dir}/SteamSDK")
-install(FILES "${GLEW_SOURCE_PATH}/LICENSE.txt" DESTINATION "${license_dir}/GLEW")
-install(FILES "${VC_LTL_Root}/Readme.md" DESTINATION "${license_dir}/VC-LTL")
 
 option(STEAMSCREENSHOTS_SYNC_GAMEDATA "Download and prune SteamScreenshots' gamedata catalog before building" ON)
 set(STEAMSCREENSHOTS_GAMEDATA_DIR "${PROJECT_BINARY_DIR}/assets/svencoop/metahook/gamedata/steamscreenshots" CACHE PATH "SteamScreenshots gamedata catalog directory")
