@@ -30,6 +30,8 @@ endif()
 if(NOT TARGET libglew_static)
     message(FATAL_ERROR "GLEW_SOURCE_PATH must provide the libglew_static CMake target.")
 endif()
+# Group the vendored GLEW library under one IDE filter.
+set_target_properties(libglew_static PROPERTIES FOLDER "glew")
 
 # Include directories and definitions follow SteamScreenshots.vcxproj.
 add_library(steamscreenshots_settings INTERFACE)
