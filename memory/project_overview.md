@@ -50,13 +50,14 @@ Key items:
   `GL_CapturePendingBeforeSwap`, called just before forwarding to the original
   `SDL_GL_SwapWindow` / `VID_FlipScreen` — with Renderer enabled, Renderer's final blit has already
   run for that frame.
-- `CSnapshotManager` registers the `ScreenshotReady_t` callback lazily, once both
-  `SteamScreenshots()` and `SteamUser()` are available, and sets the screenshot Location to
+- `CSnapshotManager` subscribes through SteamAPIBridge lazily once screenshot and user
+  capabilities are available, and sets the screenshot Location to
   `g_szServerName` and tags the local Steam user.
 - `__MsgFunc_ServerName` retains at most 255 bytes of the server name; `HUD_Frame` clears it at the
   main menu (empty `pfnGetLevelName`).
 - `HUD_Shutdown` unregisters the Steam callback, shuts the capture backend down, then forwards to
   the original `HUD_Shutdown`.
+- `ExitGame` and plugin `Shutdown` also release the Bridge context idempotently.
 
 ## Architecture
 
@@ -101,9 +102,9 @@ Y --> Z[SetLocation and TagUser]
   `cl_exportfuncs_t` (`HUD_Frame`, `HUD_Shutdown`, `IN_ActivateMouse`), `parsemsg`
   (`BEGIN_READ` / `READ_STRING`), `HOOK_MESSAGE(ServerName)`. `CreateInterface` and the
   `ServerName` message parser come from MetaHook's `include/HLSDK/common`.
-- **SteamSDK (`SteamAPI`)**: `steam_api.h`, `ISteamScreenshots`, `ScreenshotReady_t`,
-  `SteamUser`; linked as the imported target `SteamSDK::SteamAPI` and loaded from the game's
-  `steam_api.dll` at runtime.
+- **SteamAPIBridge**: C operations for screenshot submission, SteamID and subscriptions;
+  linked to SteamAPIBridge.dll. The bridge dynamically uses the game's own steam_api.dll,
+  including SteamClient012 with User016/Screenshots001 fallback. No direct SteamAPI import.
 - **GLEW (static) + `opengl32`**: `glReadPixels`, `GL_PIXEL_PACK_BUFFER`, `glMapBuffer`,
   `glFenceSync` / `glClientWaitSync`. `GL_READ_FRAMEBUFFER` needs core/ARB framebuffer support
   (`GLEW_VERSION_3_0` or `GLEW_ARB_framebuffer_object`), not just `EXT_framebuffer_object`.
@@ -130,7 +131,7 @@ Y --> Z[SetLocation and TagUser]
 `scripts/build-SteamScreenshots-x86-{Debug,Release}.bat` → CMake (Visual Studio 17 2022,
 `-A Win32`) → compile the DLL → install. The build uses MSVC x86 / C++20, a static CRT and VC-LTL
 5.3.1, with the explicit compile list in `cmake/Sources.cmake`; GLEW is configured from
-`GLEW_SOURCE_PATH` as `libglew_static` and SteamSDK is consumed as an imported library.
+`GLEW_SOURCE_PATH` as `libglew_static`; SteamAPIBridge is a shared build target.
 `scripts/manifests/steamscreenshots.json` → `scripts/sync-gamedata.py` → pruned catalog under
 `build/x86/<Configuration>/assets/svencoop/metahook/gamedata/steamscreenshots`, validated by
 `scripts/validate-gamedata.py` before the plugin target builds; disable with
@@ -177,6 +178,11 @@ builds the capture tests; running them requires a desktop OpenGL 3.3 driver.
   `HUD_Frame` / `HUD_Shutdown` drive fence polling and resource cleanup.
 
 ## External documentation
+
+SteamAPIBridge integration was verified with Debug/Release builds and all 11 capture tests
+in both configurations. The install includes the bridge DLL/PDB, never steam_api.dll.
+Loader-only checks succeeded with real Half-Life, Sven Co-op and SDK Steam runtimes;
+actual screenshot submission and engine compatibility remain separate game-run checks.
 
 `README.md` is the English landing page and `README.zh-CN.md` the Chinese one; together with
 `docs/en/` and `docs/zh-CN/` they cover installation, build, gamedata and tests.

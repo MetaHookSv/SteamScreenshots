@@ -8,6 +8,8 @@
 svencoop/
   metahook/plugins/SteamScreenshots.dll
   metahook/plugins/SteamScreenshots.pdb
+  metahook/dlls/SteamAPIBridge.dll
+  metahook/dlls/SteamAPIBridge.pdb
   metahook/gamedata/steamscreenshots/   (SteamScreenshots' own gamedata json)
   metahook/licenses/SteamScreenshots/   (dependency notices, excluded from the 7z)
 ```

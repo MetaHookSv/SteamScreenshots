@@ -1,5 +1,9 @@
 # SteamScreenshots
 
+本插件动态链接 `SteamAPIBridge.dll`，安装在 `metahook/dlls`。部署插件时请一并保留该依赖。
+Bridge 使用游戏已有的 Steam 运行库，不替换 `steam_api.dll`。独立构建可通过
+`STEAMAPIBRIDGE_SOURCE_PATH` 指定源码，否则获取固定提交。
+
 [English README](README.md)
 
 SteamScreenshots 是 MetaHook 截图插件，本插件会接管引擎的 `snapshot` 命令，并将截图画面

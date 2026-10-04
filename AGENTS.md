@@ -45,7 +45,7 @@ This file provides guidance and important rules working with code in this reposi
 - Docs: `README.md` / `README.zh-CN.md`, prose pages under `docs/en/` and `docs/zh-CN/`,
   dependency notices in `docs/DEPENDENCIES.md`
 - External sources, all read-only inputs: `METAHOOK_SOURCE_PATH` (public API and HLSDK),
-  `STEAMSDK_SOURCE_PATH` (`steam_api.h` and `lib/steam_api.lib`), `GLEW_SOURCE_PATH` (configured as
+  `STEAMSDK_SOURCE_PATH` (headers used by the bridge), `STEAMAPIBRIDGE_SOURCE_PATH` (shared DLL), `GLEW_SOURCE_PATH` (configured as
   the static `libglew_static` target), `CAPSTONE_INCLUDE_DIRS` (tests), `GLFW_SOURCE_PATH` (tests
   only), `VC_LTL_Root`. Empty paths fall back to pinned FetchContent; VC-LTL is downloaded into
   `thirdparty/cache` and checked against its SHA256.

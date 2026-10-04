@@ -1,5 +1,10 @@
 # SteamScreenshots
 
+This plugin dynamically links SteamAPIBridge.dll, installed under `metahook/dlls`.
+Keep this dependency with the plugin when deploying. The bridge uses the game's
+existing Steam runtime; it does not replace `steam_api.dll`. Standalone builds accept
+`STEAMAPIBRIDGE_SOURCE_PATH` or fetch a fixed bridge commit.
+
 [中文文档](README.zh-CN.md)
 
 SteamScreenshots is a MetaHook plugin that takes over the engine's `snapshot` command and

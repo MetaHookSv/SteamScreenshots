@@ -36,7 +36,8 @@ MetaHook 作为 SDK 使用，不构建 launcher 或链接 Capstone。
 | CMake 变量 | 路径要求 |
 | --- | --- |
 | `METAHOOK_SOURCE_PATH` | 含 `include/metahook.h` 和 HLSDK 源码的 MetaHook 根目录 |
-| `STEAMSDK_SOURCE_PATH` | 含 `steam/`、`lib/steam_api.lib`、`bin/steam_api.dll` 的 SteamSDK 根目录 |
+| `STEAMSDK_SOURCE_PATH` | SteamSDK `steam/` headers and `STEAM-SDK-NOTICE.md` (read-only) |
+| `STEAMAPIBRIDGE_SOURCE_PATH` | SteamAPIBridge source; empty fetches the pinned commit and builds its shared DLL |
 | `GLEW_SOURCE_PATH` | 含 `CMakeLists.txt`、`include/GL/glew.h` 的 glew-cmake 根目录 |
 | `CAPSTONE_INCLUDE_DIRS` | 含 `capstone.h` 或 `capstone/capstone.h` 的 include 目录列表 |
 | `GLFW_SOURCE_PATH` | GLFW 根目录，仅在开启测试时使用 |

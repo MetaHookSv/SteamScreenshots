@@ -6,7 +6,7 @@
 #include "entity_types.h"
 #include "parsemsg.h"
 #include "gl_capture.h"
-#include <steam_api.h>
+#include <SteamAPIBridge.h>
 
 cl_enginefunc_t gEngfuncs;
 engine_studio_api_t IEngineStudio;
@@ -16,7 +16,6 @@ char g_szServerName[256] = {0};
 
 namespace
 {
-	bool g_bLoggedSteamScreenshotsUnavailable = false;
 	bool g_bLoggedSteamUserUnavailable = false;
 	bool g_bLoggedSteamScreenshotsWriteUnavailable = false;
 
@@ -35,12 +34,14 @@ static hook_t* g_pPresentHook = NULL;
 class CSnapshotManager
 {
 public:
-	STEAM_CALLBACK_MANUAL(CSnapshotManager, OnSnapshotCallback, ScreenshotReady_t, m_ScreenshotReadyCallback);
+	static void __cdecl OnSnapshotCallback(void*, uint32_t screenshot, int32_t result);
 	void TryRegisterCallback();
 	void UnregisterCallback();
+	SteamBridgeContextHandle Context() const { return m_Context; }
 
 private:
 	bool m_bCallbackRegistered = false;
+	SteamBridgeContextHandle m_Context = nullptr;
 };
 
 CSnapshotManager g_SnapshotManager;
@@ -50,40 +51,33 @@ void CSnapshotManager::TryRegisterCallback()
 	if (m_bCallbackRegistered)
 		return;
 
-	if (!SteamScreenshots() || !SteamUser())
+	if (!m_Context)
+		m_Context = SteamBridge_CreateContext();
+	if ((SteamBridge_GetCapabilities(m_Context) & (SB_CAP_SCREENSHOTS | SB_CAP_USER)) != (SB_CAP_SCREENSHOTS | SB_CAP_USER))
 		return;
 
-	m_ScreenshotReadyCallback.Register(this, &CSnapshotManager::OnSnapshotCallback);
-	m_bCallbackRegistered = true;
+	m_bCallbackRegistered = SteamBridge_SubscribeScreenshots(m_Context, OnSnapshotCallback, this) == SB_OK;
 }
 
 void CSnapshotManager::UnregisterCallback()
 {
-	if (!m_bCallbackRegistered)
-		return;
-
-	m_ScreenshotReadyCallback.Unregister();
+	SteamBridge_DestroyContext(m_Context);
+	m_Context = nullptr;
 	m_bCallbackRegistered = false;
 }
 
-void CSnapshotManager::OnSnapshotCallback(ScreenshotReady_t* pCallback)
+void __cdecl CSnapshotManager::OnSnapshotCallback(void* opaque, uint32_t screenshot, int32_t result)
 {
-	auto pSteamScreenshots = SteamScreenshots();
+	auto context = static_cast<CSnapshotManager*>(opaque)->Context();
 
-	if (!pSteamScreenshots)
+	if (result == SB_STEAM_RESULT_OK)
 	{
-		Con_Printf_Once(g_bLoggedSteamScreenshotsUnavailable, "[SteamScreenshots] Steam screenshots interface unavailable.\n");
-		return;
-	}
+		SteamBridge_SetScreenshotLocation(context, screenshot, g_szServerName);
 
-	if (pCallback->m_eResult == k_EResultOK)
-	{
-		pSteamScreenshots->SetLocation(pCallback->m_hLocal, g_szServerName);
-
-		auto pSteamUser = SteamUser();
-		if (pSteamUser)
+		uint64_t steamId = 0;
+		if (SteamBridge_GetSteamID(context, &steamId) == SB_OK)
 		{
-			pSteamScreenshots->TagUser(pCallback->m_hLocal, pSteamUser->GetSteamID());
+			SteamBridge_TagScreenshotUser(context, screenshot, steamId);
 		}
 		else
 		{
@@ -92,7 +86,7 @@ void CSnapshotManager::OnSnapshotCallback(ScreenshotReady_t* pCallback)
 
 		gEngfuncs.Con_Printf("[SteamScreenshots] Snapshot saved.\n");
 	}
-	else if (pCallback->m_eResult == k_EResultIOFailure)
+	else if (result == SB_STEAM_RESULT_IO_FAILURE)
 	{
 		gEngfuncs.Con_Printf("[SteamScreenshots] Cannot save snapshot. Got an IO error.\n");
 	}
@@ -104,24 +98,25 @@ void CSnapshotManager::OnSnapshotCallback(ScreenshotReady_t* pCallback)
 
 void HUD_Shutdown(void)
 {
-	g_SnapshotManager.UnregisterCallback();
+	ShutdownSteamBridge();
 
 	GL_ShutdownCapture();
 
 	gExportfuncs.HUD_Shutdown();
 }
 
+void ShutdownSteamBridge()
+{
+	g_SnapshotManager.UnregisterCallback();
+}
+
 void ScreenshotCallback(void* pBuf, size_t cbBufSize, int width, int height)
 {
-	auto pSteamScreenshots = SteamScreenshots();
-
-	if (!pSteamScreenshots)
+	uint32_t screenshot = 0;
+	if (SteamBridge_WriteScreenshot(g_SnapshotManager.Context(), pBuf, static_cast<uint32_t>(cbBufSize), width, height, &screenshot) != SB_OK)
 	{
 		Con_Printf_Once(g_bLoggedSteamScreenshotsWriteUnavailable, "[SteamScreenshots] Cannot write screenshot because Steam screenshots interface is unavailable.\n");
-		return;
 	}
-
-	pSteamScreenshots->WriteScreenshot(pBuf, cbBufSize, width, height);
 }
 
 void __cdecl SDL_GL_SwapWindow(void* window)

@@ -39,7 +39,8 @@ environment variables:
 | CMake variable | Expected contents |
 | --- | --- |
 | `METAHOOK_SOURCE_PATH` | MetaHook repository root with `include/metahook.h` and HLSDK sources |
-| `STEAMSDK_SOURCE_PATH` | SteamSDK root with `steam/`, `lib/steam_api.lib` and `bin/steam_api.dll` |
+| `STEAMSDK_SOURCE_PATH` | SteamSDK `steam/` headers and `STEAM-SDK-NOTICE.md` (read-only) |
+| `STEAMAPIBRIDGE_SOURCE_PATH` | SteamAPIBridge source; empty fetches the pinned commit and builds its shared DLL |
 | `GLEW_SOURCE_PATH` | glew-cmake root with `CMakeLists.txt` and `include/GL/glew.h` |
 | `CAPSTONE_INCLUDE_DIRS` | Include directories containing `capstone.h` or `capstone/capstone.h` |
 | `GLFW_SOURCE_PATH` | GLFW source root; used only with `BUILD_TESTING=ON` |

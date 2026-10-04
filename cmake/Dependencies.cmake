@@ -27,7 +27,7 @@ endfunction()
 function(steamscreenshots_prepare_dependencies)
     set(METAHOOK_files include/metahook.h include/HLSDK/common/interface.cpp
         include/HLSDK/common/parsemsg.cpp include/HLSDK/common/cvardef.h include/Interface/IPlugins.h LICENSE)
-    set(STEAMSDK_files steam/steam_api.h lib/steam_api.lib bin/steam_api.dll STEAM-SDK-NOTICE.md)
+    set(STEAMSDK_files steam/steam_api.h STEAM-SDK-NOTICE.md)
     set(GLEW_files CMakeLists.txt include/GL/glew.h src/glew.c LICENSE.txt)
     set(GLFW_files CMakeLists.txt include/GLFW/glfw3.h)
     set(vcltl_files "VC-LTL helper for cmake.cmake" config/config.cmake Readme.md
@@ -111,11 +111,4 @@ function(steamscreenshots_prepare_dependencies)
     steamscreenshots_require_files(VC_LTL_Root "${VC_LTL_Root}" ${vcltl_files})
     set(VC_LTL_Root "${VC_LTL_Root}" PARENT_SCOPE)
 
-    # Directory-scoped: UtilHTTPClient_SteamAPI defines its own SteamSDK::SteamAPI with a
-    # different include root, and both may share one aggregating parent build.
-    add_library(SteamSDK::SteamAPI SHARED IMPORTED)
-    set_target_properties(SteamSDK::SteamAPI PROPERTIES
-        IMPORTED_IMPLIB "${STEAMSDK_SOURCE_PATH}/lib/steam_api.lib"
-        IMPORTED_LOCATION "${STEAMSDK_SOURCE_PATH}/bin/steam_api.dll"
-        INTERFACE_INCLUDE_DIRECTORIES "${STEAMSDK_SOURCE_PATH}/steam")
 endfunction()

@@ -17,6 +17,7 @@ option(BUILD_TESTING "Build the OpenGL capture tests (requires an OpenGL 3.3 dri
 include(cmake/Dependencies.cmake)
 steamscreenshots_prepare_dependencies()
 include("${VC_LTL_Root}/VC-LTL helper for cmake.cmake")
+include(cmake/SteamAPIBridge.cmake)
 
 # Configure the existing GLEW fork without installing its SDK into the plugin package.
 set(USE_VCLTL OFF CACHE BOOL "Separate vendor VC-LTL integration" FORCE)
@@ -59,7 +60,7 @@ target_compile_options(steamscreenshots_settings INTERFACE /permissive
 
 include(cmake/Sources.cmake)
 add_library(SteamScreenshots SHARED ${STEAMSCREENSHOTS_SOURCES})
-target_link_libraries(SteamScreenshots PRIVATE steamscreenshots_settings libglew_static SteamSDK::SteamAPI opengl32)
+target_link_libraries(SteamScreenshots PRIVATE steamscreenshots_settings libglew_static SteamAPIBridge opengl32)
 target_compile_options(SteamScreenshots PRIVATE /MP /Zi)
 target_link_options(SteamScreenshots PRIVATE /DEBUG /SUBSYSTEM:WINDOWS
     $<$<CONFIG:Debug>:/INCREMENTAL>

@@ -25,7 +25,7 @@ void IPluginsV4::Init(metahook_api_t *pAPI, mh_interface_t *pInterface, mh_engin
 
 void IPluginsV4::Shutdown(void)
 {
-
+	ShutdownSteamBridge();
 }
 
 void IPluginsV4::LoadEngine(cl_enginefunc_t *pEngfuncs)
@@ -53,6 +53,7 @@ void IPluginsV4::LoadClient(cl_exportfuncs_t *pExportFunc)
 
 void IPluginsV4::ExitGame(int iResult)
 {
+	ShutdownSteamBridge();
 	GL_DiscardPendingCapture();
 	UninstallPresentHook();
 }
