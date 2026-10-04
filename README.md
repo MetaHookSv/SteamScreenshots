@@ -7,11 +7,11 @@ existing Steam runtime; it does not replace `steam_api.dll`. Standalone builds a
 
 [中文文档](README.zh-CN.md)
 
-SteamScreenshots is a MetaHook plugin that takes over the engine's `snapshot` command and
+SteamScreenshots is a MetaHook plugin that takes over GoldSrc engine's `snapshot` command and
 sends captured image to the Steam Screenshot Manager.
 
 * The game must provide a compatible x86 `steam_api.dll`, initialize Steamworks and dispatch
-  its callbacks.
+  its callbacks. thus non-Steam (pirate) games won't be working with this plugin.
 * Capture requires core/ARB framebuffer support. OpenGL 3.2 with synchronization entry points
   uses asynchronous PBO capture; otherwise capture is synchronous.
 * When a presentation hook or framebuffer capture is unavailable, the engine's original
@@ -19,17 +19,13 @@ sends captured image to the Steam Screenshot Manager.
 
 ## Compatibility
 
-|        Engine                     |      |
-|        ----                       | ---- |
-| GoldSrc_HL25   (hl-10210)         | √    |
-| SvEngine       (svencoop-10257)   | √    |
-
-`hl-10210` is hooked through the engine's `VID_FlipScreen` global; `svencoop-10257` uses the
-SDL2 presentation hook. The gamedata catalog also lists eight other upstream snapshots where
-that global exists; they are catalog coverage, not validated support. Without a record the
-original snapshot command is kept.
-
-The plugin builds for MSVC x86 only.
+| Engine | |
+| --- | --- |
+| GoldSrc_blob (3248~4554) | ? (not tested) |
+| GoldSrc_legacy (< 6153) | ? (not tested) |
+| GoldSrc_new (8684 ~) | ? (not tested) |
+| SvEngine (8832 ~) | √ |
+| GoldSrc_HL25 (>= 9884) | √ |
 
 ## Quick start
 
