@@ -23,7 +23,10 @@ set(USE_VCLTL OFF CACHE BOOL "Separate vendor VC-LTL integration" FORCE)
 set(glew-cmake_BUILD_SHARED OFF CACHE BOOL "" FORCE)
 set(glew-cmake_BUILD_STATIC ON CACHE BOOL "" FORCE)
 set(ONLY_LIBS ON CACHE BOOL "" FORCE)
-add_subdirectory("${GLEW_SOURCE_PATH}" "${CMAKE_CURRENT_BINARY_DIR}/thirdparty/GLEW" EXCLUDE_FROM_ALL)
+# An aggregating parent build may already provide libglew_static from a sibling component.
+if(NOT TARGET libglew_static)
+    add_subdirectory("${GLEW_SOURCE_PATH}" "${CMAKE_CURRENT_BINARY_DIR}/thirdparty/GLEW" EXCLUDE_FROM_ALL)
+endif()
 if(NOT TARGET libglew_static)
     message(FATAL_ERROR "GLEW_SOURCE_PATH must provide the libglew_static CMake target.")
 endif()
@@ -73,13 +76,13 @@ install(FILES "${GLEW_SOURCE_PATH}/LICENSE.txt" DESTINATION "${license_dir}/GLEW
 install(FILES "${VC_LTL_Root}/Readme.md" DESTINATION "${license_dir}/VC-LTL")
 
 option(STEAMSCREENSHOTS_SYNC_GAMEDATA "Download and prune SteamScreenshots' gamedata catalog before building" ON)
-set(STEAMSCREENSHOTS_GAMEDATA_DIR "${CMAKE_BINARY_DIR}/assets/svencoop/metahook/gamedata/steamscreenshots" CACHE PATH "SteamScreenshots gamedata catalog directory")
+set(STEAMSCREENSHOTS_GAMEDATA_DIR "${PROJECT_BINARY_DIR}/assets/svencoop/metahook/gamedata/steamscreenshots" CACHE PATH "SteamScreenshots gamedata catalog directory")
 if(STEAMSCREENSHOTS_SYNC_GAMEDATA)
     find_package(Python3 REQUIRED COMPONENTS Interpreter)
     add_custom_target(SteamScreenshotsGameData
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/scripts/sync-gamedata.py"
             --manifest "${CMAKE_CURRENT_SOURCE_DIR}/scripts/manifests/steamscreenshots.json"
-            --target-dir "${STEAMSCREENSHOTS_GAMEDATA_DIR}" --temp-root "${CMAKE_BINARY_DIR}/gamedata-sync"
+            --target-dir "${STEAMSCREENSHOTS_GAMEDATA_DIR}" --temp-root "${PROJECT_BINARY_DIR}/gamedata-sync"
         COMMENT "Synchronizing and validating SteamScreenshots gamedata"
         VERBATIM
     )

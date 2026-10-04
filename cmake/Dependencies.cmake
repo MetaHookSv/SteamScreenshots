@@ -111,7 +111,9 @@ function(steamscreenshots_prepare_dependencies)
     steamscreenshots_require_files(VC_LTL_Root "${VC_LTL_Root}" ${vcltl_files})
     set(VC_LTL_Root "${VC_LTL_Root}" PARENT_SCOPE)
 
-    add_library(SteamSDK::SteamAPI SHARED IMPORTED GLOBAL)
+    # Directory-scoped: UtilHTTPClient_SteamAPI defines its own SteamSDK::SteamAPI with a
+    # different include root, and both may share one aggregating parent build.
+    add_library(SteamSDK::SteamAPI SHARED IMPORTED)
     set_target_properties(SteamSDK::SteamAPI PROPERTIES
         IMPORTED_IMPLIB "${STEAMSDK_SOURCE_PATH}/lib/steam_api.lib"
         IMPORTED_LOCATION "${STEAMSDK_SOURCE_PATH}/bin/steam_api.dll"
