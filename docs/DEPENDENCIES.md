@@ -12,7 +12,7 @@ gamedata synchronizer/validator follow the standalone ResourceReplacer repositor
 | SteamSDK | https://github.com/MetaHookSv/SteamSDK | `3c1abaf6277f9f99fd16ef40557d6852820b848f` |
 | GLEW | https://github.com/hzqst/glew-cmake | `56ed32d4a929f993f0e6b7f905af9be4d38fda04` |
 | Capstone headers | https://github.com/hzqst/capstone | `e81e390f621ee59d14f70e16fe065dd00f78ee71` |
-| GLFW (tests only) | https://github.com/glfw/glfw | `7b6aead9fb88b3623e3b3725ebb42670cbe4c579` |
+| GLFW (tests only) | https://github.com/MetaHookSv/glfw | `92dcf4ce74f2e2554a98fea09be7c705c17daa5a` |
 | VC-LTL | https://github.com/Chuyu-Team/VC-LTL5/releases/tag/v5.3.1 | `5.3.1` |
 
 VC-LTL's binary archive SHA256 is

@@ -159,7 +159,7 @@ The scripts configure, build and install, forwarding extra CMake arguments. Debu
 | `STEAMAPIBRIDGE_SOURCE_PATH` | SteamAPIBridge source with `CMakeLists.txt` | pinned commit, built as a shared DLL |
 | `GLEW_SOURCE_PATH` | glew-cmake root providing the `libglew_static` target | configure fails |
 | `CAPSTONE_INCLUDE_DIRS` | directories containing `capstone.h` | SDK `thirdparty/capstone_fork`, else pinned |
-| `GLFW_SOURCE_PATH` | GLFW source root, tests only | pinned FetchContent when `BUILD_TESTING=ON` |
+| `GLFW_SOURCE_PATH` | GLFW source root, tests only (the `MetaHookSv/glfw` fork) | pinned FetchContent of the same fork when `BUILD_TESTING=ON` |
 | `VC_LTL_Root` | existing VC-LTL package root | downloaded to `thirdparty/cache`, SHA256-checked |
 
 External source trees are read-only build inputs. GLEW is the only dependency configured and built here (`add_subdirectory(..., EXCLUDE_FROM_ALL)`); SteamAPIBridge is added as a subproject, and **that subproject — not this `CMakeLists.txt` — installs `metahook/dlls/SteamAPIBridge.dll` and the `metahook/licenses/SteamScreenshots/` notices**. The plugin links `libglew_static`, `SteamAPIBridge` and `opengl32`; Capstone is never linked.
