@@ -38,7 +38,6 @@ SteamScreenshots/
 │   └── README.md              # Test coverage notes
 ├── docs/DEPENDENCIES.md       # Dependency versions and notices
 ├── docs/en/, docs/zh-CN/      # Bilingual pages: installation, build-instruction, tests, debugging
-├── memory/project_overview.md # Longer design note (permalink prefix `steamscreenshots/`)
 ├── thirdparty/cache/          # Ignored VC-LTL binary cache
 ├── build/x86/<configuration>/    # Ignored build output
 ├── install/x86/<configuration>/  # Ignored install output
