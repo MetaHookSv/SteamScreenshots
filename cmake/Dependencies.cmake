@@ -72,7 +72,8 @@ function(steamscreenshots_prepare_dependencies)
     endif()
 
     set(METAHOOK_url https://github.com/MetaHookSv/MetaHook)
-    set(METAHOOK_commit 4d23b6fecd79dc949aabc2e145480cd1328d4a35)
+    # MetaHook is tracked as a branch: always fetch the latest main.
+    set(METAHOOK_commit origin/main)
     set(STEAMSDK_url https://github.com/MetaHookSv/SteamSDK)
     set(STEAMSDK_commit 3c1abaf6277f9f99fd16ef40557d6852820b848f)
     set(GLEW_url https://github.com/hzqst/glew-cmake)

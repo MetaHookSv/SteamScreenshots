@@ -154,7 +154,7 @@ The scripts configure, build and install, forwarding extra CMake arguments. Debu
 
 | CMake variable | Expected contents | When empty |
 | --- | --- | --- |
-| `METAHOOK_SOURCE_PATH` | MetaHook root with `include/metahook.h` and the HLSDK sources | pinned FetchContent |
+| `METAHOOK_SOURCE_PATH` | MetaHook root with `include/metahook.h` and the HLSDK sources | FetchContent of the latest `main` |
 | `STEAMSDK_SOURCE_PATH` | SteamSDK `steam/` headers and `STEAM-SDK-NOTICE.md` (read-only) | pinned FetchContent |
 | `STEAMAPIBRIDGE_SOURCE_PATH` | SteamAPIBridge source with `CMakeLists.txt` | pinned commit, built as a shared DLL |
 | `GLEW_SOURCE_PATH` | glew-cmake root providing the `libglew_static` target | configure fails |

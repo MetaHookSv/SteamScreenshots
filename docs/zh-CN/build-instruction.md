@@ -25,7 +25,7 @@ scripts\build-SteamScreenshots-x86-Debug.bat
 `install/x86/<Configuration>/svencoop/metahook`，包含 DLL、PDB、裁剪后的 gamedata 和依赖
 许可说明。构建脚本不直接部署到游戏。
 
-首次配置自动获取固定提交的 MetaHook、SteamSDK、GLEW 和必要的 Capstone headers，并下载
+首次配置自动获取最新 `main` 的 MetaHook，以及固定提交的 SteamSDK、GLEW 和必要的 Capstone headers，并下载
 SHA256 校验的 VC-LTL 5.3.1 到 `thirdparty/cache`。使用 C++20、静态 CRT 和静态 GLEW；
 MetaHook 作为 SDK 使用，不构建 launcher 或链接 Capstone。
 

@@ -6,9 +6,9 @@ Plugin sources and capture tests originate from
 the capture test's include path is adjusted for `src/`. Build helpers and the
 gamedata synchronizer/validator follow the standalone ResourceReplacer repository.
 
-| Dependency | Source | Pinned revision |
+| Dependency | Source | Revision |
 | --- | --- | --- |
-| MetaHook SDK | https://github.com/MetaHookSv/MetaHook | `4d23b6fecd79dc949aabc2e145480cd1328d4a35` |
+| MetaHook SDK | https://github.com/MetaHookSv/MetaHook | latest `main` |
 | SteamSDK | https://github.com/MetaHookSv/SteamSDK | `3c1abaf6277f9f99fd16ef40557d6852820b848f` |
 | GLEW | https://github.com/hzqst/glew-cmake | `56ed32d4a929f993f0e6b7f905af9be4d38fda04` |
 | Capstone headers | https://github.com/hzqst/capstone | `e81e390f621ee59d14f70e16fe065dd00f78ee71` |
