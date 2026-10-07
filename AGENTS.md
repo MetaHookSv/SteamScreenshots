@@ -265,7 +265,7 @@ Runtime configuration: `SteamScreenshots.dll` must be listed in the host's `meta
 
 ## Related Links
 
-- **MetaHookSV**: https://github.com/hzqst/MetaHookSv
+- **MetaHookSV**: https://github.com/MetaHookSv/MetaHookSv
 - **Gamedata symbol catalog**: https://hlnd2t.github.io/GoldSrc_VibeSignatures/
 - **Steamworks ISteamScreenshots**: https://partner.steamgames.com/doc/api/ISteamScreenshots
 - **GLEW**: https://glew.sourceforge.net/

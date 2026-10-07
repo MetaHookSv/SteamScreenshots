@@ -1,7 +1,7 @@
 # Dependency versions and notices
 
 Plugin sources and capture tests originate from
-[MetaHookSv](https://github.com/hzqst/MetaHookSv) commit
+[MetaHookSv](https://github.com/MetaHookSv/MetaHookSv) commit
 `fe80b6d60bfb487b52aed7ea7ec0492e7b27a5d2`. The plugin source is copied unchanged;
 the capture test's include path is adjusted for `src/`. Build helpers and the
 gamedata synchronizer/validator follow the standalone ResourceReplacer repository.
