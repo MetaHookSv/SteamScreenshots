@@ -19,4 +19,4 @@ struct CaptureTestEngine
 };
 
 extern CaptureTestVideoAPI* g_pMetaHookAPI;
-extern CaptureTestEngine gEngfuncs;
+extern CaptureTestEngine    gEngfuncs;
