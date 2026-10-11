@@ -65,7 +65,9 @@ target_compile_options(steamscreenshots_settings INTERFACE /permissive
     /wd4311 /wd4312 /wd4819 /wd4996)
 
 include(cmake/Sources.cmake)
+include(cmake/SourceGroups.cmake)
 add_library(SteamScreenshots SHARED ${STEAMSCREENSHOTS_SOURCES})
+steamscreenshots_assign_source_groups(SteamScreenshots)
 target_link_libraries(SteamScreenshots PRIVATE steamscreenshots_settings libglew_static SteamAPIBridge opengl32)
 target_compile_options(SteamScreenshots PRIVATE /MP /Zi)
 target_link_options(SteamScreenshots PRIVATE /DEBUG /SUBSYSTEM:WINDOWS
