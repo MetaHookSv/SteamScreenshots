@@ -27,7 +27,7 @@ The scripts configure under `build/x86/<Configuration>` and install to
 gamedata and dependency notices. It does not deploy into a game.
 
 The first configure fetches the latest `main` of MetaHook, and pinned SteamSDK, GLEW and, when needed, Capstone
-headers. VC-LTL 5.3.1 is downloaded into `thirdparty/cache` and checked against its SHA256.
+headers.
 The build uses C++20, a static CRT and static GLEW. MetaHook is consumed as an SDK; the
 launcher and Capstone library are not built.
 
@@ -44,7 +44,6 @@ environment variables:
 | `GLEW_SOURCE_PATH` | glew-cmake root with `CMakeLists.txt` and `include/GL/glew.h` |
 | `CAPSTONE_INCLUDE_DIRS` | Include directories containing `capstone.h` or `capstone/capstone.h` |
 | `GLFW_SOURCE_PATH` | GLFW source root; used only with `BUILD_TESTING=ON` |
-| `VC_LTL_Root` | Existing VC-LTL binary package root |
 
 ```bat
 scripts\build-SteamScreenshots-x86-Release.bat -DMETAHOOK_SOURCE_PATH=D:\MetaHook -DSTEAMSDK_SOURCE_PATH=D:\SteamSDK

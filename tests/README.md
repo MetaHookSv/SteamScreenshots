@@ -39,7 +39,7 @@ screenshot submission. Those require game integration testing.
 Verified on Windows with Visual Studio 2022, MSVC 19.44.35228, CMake 3.31.12
 and Python 3.12.5:
 
-- Release fetched every pinned source dependency and the verified VC-LTL package;
+- Release fetched every pinned source dependency;
   Debug built against explicit local MetaHook, SteamSDK, GLEW, GLFW and Capstone paths.
 - Both configurations built and installed successfully; all 11 capture tests
   passed in each configuration (22 executions).

@@ -24,8 +24,7 @@ SteamScreenshots/
 │   ├── Sources.cmake          # Explicit compile list (3 plugin units + 2 SDK units)
 │   ├── Dependencies.cmake     # Source-path resolution and FetchContent fallback
 │   ├── SteamAPIBridge.cmake   # Configures or fetches the shared bridge subproject
-│   ├── LaunchGame.cmake       # Optional F5 deploy support
-│   └── VCLTL.cmake            # VC-LTL 5.3.1
+│   └── LaunchGame.cmake       # Optional F5 deploy support
 ├── scripts/
 │   ├── build-SteamScreenshots-x86-{Debug,Release}.bat
 │   ├── manifests/steamscreenshots.json # Gamedata manifest (one engine global)
@@ -38,7 +37,6 @@ SteamScreenshots/
 │   └── README.md              # Test coverage notes
 ├── docs/DEPENDENCIES.md       # Dependency versions and notices
 ├── docs/en/, docs/zh-CN/      # Bilingual pages: installation, build-instruction, tests, debugging
-├── thirdparty/cache/          # Ignored VC-LTL binary cache
 ├── build/x86/<configuration>/    # Ignored build output
 ├── install/x86/<configuration>/  # Ignored install output
 ├── README.md, README.zh-CN.md # Bilingual install / compatibility documentation
@@ -141,7 +139,7 @@ Steam: ScreenshotReady_t → OnSnapshotCallback
 
 ## Build Instructions
 
-Requirements: Windows, Visual Studio 2022 with the C++ desktop workload, CMake 3.21 or newer, Git, Python 3.8 or newer, MSVC x86 (`-A Win32`), C++20 (`cxx_std_20`), static CRT (`MultiThreaded`), static GLEW (`GLEW_STATIC`), `_MBCS` and VC-LTL 5.3.1. No forced AVX2 instruction set.
+Requirements: Windows, Visual Studio 2022 with the C++ desktop workload, CMake 3.21 or newer, Git, Python 3.8 or newer, MSVC x86 (`-A Win32`), C++20 (`cxx_std_20`), static CRT (`MultiThreaded`), static GLEW (`GLEW_STATIC`) and `_MBCS`. No forced AVX2 instruction set.
 
 ```bat
 scripts\build-SteamScreenshots-x86-Release.bat
@@ -160,7 +158,6 @@ The scripts configure, build and install, forwarding extra CMake arguments. Debu
 | `GLEW_SOURCE_PATH` | glew-cmake root providing the `libglew_static` target | configure fails |
 | `CAPSTONE_INCLUDE_DIRS` | directories containing `capstone.h` | SDK `thirdparty/capstone_fork`, else pinned |
 | `GLFW_SOURCE_PATH` | GLFW source root, tests only (the `MetaHookSv/glfw` fork) | pinned FetchContent of the same fork when `BUILD_TESTING=ON` |
-| `VC_LTL_Root` | existing VC-LTL package root | downloaded to `thirdparty/cache`, SHA256-checked |
 
 External source trees are read-only build inputs. GLEW is the only dependency configured and built here (`add_subdirectory(..., EXCLUDE_FROM_ALL)`); SteamAPIBridge is added as a subproject, and **that subproject — not this `CMakeLists.txt` — installs `metahook/dlls/SteamAPIBridge.dll` and the `metahook/licenses/SteamScreenshots/` notices**. The plugin links `libglew_static`, `SteamAPIBridge` and `opengl32`; Capstone is never linked.
 
@@ -257,7 +254,7 @@ Runtime configuration: `SteamScreenshots.dll` must be listed in the host's `meta
 - Keep the graceful-degradation policy. Unlike the fail-loudly plugins in this workspace, a missing or failed symbol must log once and keep the engine's original `snapshot` command — never `Sys_Error` at load time — and support is decided by the availability of a presentation hook, not by hard-coded buildnum checks
 - Keep the deferred installation point (first `IN_ActivateMouse`); the engine registers `snapshot` after `HUD_Init`, so installing earlier would silently lose the takeover
 - Do not modify external or third-party sources. MetaHook, SteamSDK, GLEW, Capstone and GLFW are read-only build inputs; only GLEW is configured and built here
-- MSVC x86 only. Keep the static CRT / VC-LTL and C++20 (`cxx_std_20`) settings in `CMakeLists.txt` in sync with the other standalone plugin repositories
+- MSVC x86 only. Keep the static CRT and C++20 (`cxx_std_20`) settings in `CMakeLists.txt` in sync with the other standalone plugin repositories
 - When gamedata usage changes, update `scripts/manifests/steamscreenshots.json` in the same change
 - Regression tests keep assertions enabled even in Release; documentation and configuration text are not assertion targets
 - `README.md` / `README.zh-CN.md` and `docs/en/` / `docs/zh-CN/` are pairs: keep install steps, compatibility claims and build options consistent across both languages

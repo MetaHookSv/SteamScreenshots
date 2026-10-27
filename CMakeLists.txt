@@ -22,11 +22,9 @@ option(BUILD_TESTING "Build the OpenGL capture tests (requires an OpenGL 3.3 dri
 
 include(cmake/Dependencies.cmake)
 steamscreenshots_prepare_dependencies()
-include("${VC_LTL_Root}/VC-LTL helper for cmake.cmake")
 include(cmake/SteamAPIBridge.cmake)
 
 # Configure the existing GLEW fork without installing its SDK into the plugin package.
-set(USE_VCLTL OFF CACHE BOOL "Separate vendor VC-LTL integration" FORCE)
 set(glew-cmake_BUILD_SHARED OFF CACHE BOOL "" FORCE)
 set(glew-cmake_BUILD_STATIC ON CACHE BOOL "" FORCE)
 set(ONLY_LIBS ON CACHE BOOL "" FORCE)

@@ -10,19 +10,15 @@ gamedata synchronizer/validator follow the standalone ResourceReplacer repositor
 | --- | --- | --- |
 | MetaHook SDK | https://github.com/MetaHookSv/MetaHook | latest `main` |
 | SteamSDK | https://github.com/MetaHookSv/SteamSDK | `3c1abaf6277f9f99fd16ef40557d6852820b848f` |
-| GLEW | https://github.com/hzqst/glew-cmake | `56ed32d4a929f993f0e6b7f905af9be4d38fda04` |
-| Capstone headers | https://github.com/hzqst/capstone | `e81e390f621ee59d14f70e16fe065dd00f78ee71` |
+| GLEW | https://github.com/hzqst/glew-cmake | `459d9b95457c5db337e2742a5501c21faddda326` |
+| Capstone headers | https://github.com/hzqst/capstone | `9e27c51c2485dd37dd3917919ae781c6153f3688` |
 | GLFW (tests only) | https://github.com/MetaHookSv/glfw | `92dcf4ce74f2e2554a98fea09be7c705c17daa5a` |
-| VC-LTL | https://github.com/Chuyu-Team/VC-LTL5/releases/tag/v5.3.1 | `5.3.1` |
 
-VC-LTL's binary archive SHA256 is
-`7a18799ed3aa84a225610a5447a56bc534c5c98ccb8dec05caba0e3f633431ad`.
-Source checkouts reside in the build directory; downloaded VC-LTL packages are
-cached in `thirdparty/cache`. GLFW is fetched only when tests are enabled.
+Source checkouts reside in the build directory. GLFW is fetched only when tests are enabled.
 
 The plugin's MIT license does not replace dependency licenses or applicable
-terms. The local installation includes MetaHook's LICENSE, GLEW's LICENSE.txt,
-SteamSDK's STEAM-SDK-NOTICE.md and VC-LTL's Readme.md in their named subdirectories
+terms. The local installation includes MetaHook's LICENSE, GLEW's LICENSE.txt and
+SteamSDK's STEAM-SDK-NOTICE.md in their named subdirectories
 under `svencoop/metahook/licenses/SteamScreenshots`. The 7z archive excludes
 the `licenses/` directory.
 
